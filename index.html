@@ -1,54 +1,105 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>action</title>
-		<meta charset="utf-8" />
-		<style>
-			
-		</style>
-		<link rel="stylesheet" href="css/lll.css" type="text/css">
-	</head>
-		
+<head>
+    <title>登录</title>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            background-image: url('https://s11.ax1x.com/2023/12/21/piTecjA.jpg');
+            background-size: cover;
+        }
 
+        .snowflake {
+            position: absolute;
+            color: white;
+            left: 0;
+            z-index: 2;
+            animation: snowfall 5s linear forwards;
+            will-change: transform;
+        }
+
+        @keyframes snowfall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        .container {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 3;
+        }
+
+        .container button {
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            var snowFlakeCount = 0;
+            setInterval(function() {
+                for (var i = 0; i < 5; i++) {  
+                    var snowflake = document.createElement("div");
+                    snowflake.id = "snowflake" + snowFlakeCount;
+                    snowflake.innerHTML = "❉";
+                    snowflake.style.left = Math.random() * 100 + "vw";
+                    snowflake.style.animationDuration = Math.random() * 5 + 5 + "s"; 
+                    snowflake.style.opacity = Math.random();
+                    snowflake.style.fontSize = Math.random() * 20 + 8 + "px";
+                    snowflake.classList.add("snowflake");
+                    document.body.appendChild(snowflake);
+                    setTimeout((function(snowflakeId) {
+                        return function(){
+                            var oldSnowflake = document.getElementById(snowflakeId);
+                            oldSnowflake.parentNode.removeChild(oldSnowflake);
+                        }
+                    })("snowflake" + snowFlakeCount), (Math.random() * 5 + 5) * 1000);
+                    snowFlakeCount += 1;
+                }
+            }, 250);
+        }, false);
+
+        function validateLogin() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            if (username === "admin" && password === "1") {
+                window.location.href = "zhuyemian.html";
+            } else {
+                alert("登录失败，请重试！");
+            }
+        }
+
+        function showCredentials() {
+            var username = "admin";
+            var password = "1";
+            alert("账号: " + username + "\n密码: " + password);
+        }
+    </script>
+</head>
 <body>
-	<div class="area" >
-            <ul class="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-            </ul>
-            <div >
-			<nav>
-				<ul>
-					<li><a href="index.html"><p>首&nbsp;&nbsp;&nbsp;&nbsp;页</p></a></li>
-					<li><a href=# ><p>传统魂类</p></a></li>
-					<li><a href="https://kepler-keb.github.io/keb.gethub.io/"><p>类魂游戏</p></a></li>
-					<li><a href="jkl.html"><p>了解魂系游戏</p></a></li>
-					
-				</ul>
-		</nav>
-		</div>
-		<div class="asd">
-			<img src="https://z1.ax1x.com/2023/11/09/pi3l3H1.png" width="800px" height="364px"/>
-		</div>
-		<div class="bottom">
-			<h3>《魂系游戏》简介</h3>
-			<p class="wen">&nbsp;&nbsp;“魂系游戏”是指一系列由FromSoftware开发的动作角色扮演游戏，以其高难度、扣人心弦的世界观和创新的游戏设计而闻名。该系列最知名的作品包括《黑暗之魂》（Dark Souls）、《恶魂》（Demon's Souls）、《血源诅咒》（Bloodborne）等。
-
-		 这些游戏以其扣人心弦的故事情节、复杂多样的关卡设计和独特的多人游戏模式而广受好评。<br>
-		 &nbsp;&nbsp;&nbsp;&nbsp;玩家需要在游戏中不断对抗各种凶残的敌人、深入未知的领域探索，并解开游戏中复杂的故事情节。游戏强调玩家的技巧和战略的运用，玩家必须谨慎选择战斗时机，并且善于利用角色的能力来克服不断出现的挑战。<br>
-		 &nbsp;&nbsp;&nbsp;&nbsp;同时，这些游戏的角色扮演元素丰富，玩家可以根据自己的喜好来定制角色的外貌和能力。这些游戏因其极高的挑战性和成就感而备受玩家喜爱，成为游戏界的经典之作。</p>
-		</div>
-		<div class="rb">
-			<a href="lianxi.html">联系作者</a>
-		</div>
-    </div >
-		</body>
+    <div class="container">
+        <h2>页面验证</h2>
+        <label for="username">登录：</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">密码：</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button onclick="validateLogin()">登录</button>
+        <button onclick="showCredentials()">忘记密码</button>
+    </div>
+</body>
 </html>
