@@ -21,8 +21,8 @@
             color: white;
             left: 0;
             z-index: 2;
-            animation: snowfall 5s  linear forwards;
-            will-change: transform;
+            animation: snowfall 5s linear forwards;
+            
         }
 
         @keyframes snowfall {
@@ -49,55 +49,70 @@
             cursor: pointer;
         }
     </style>
-    <script>
-        window.addEventListener("DOMContentLoaded", function() {
-            var snowFlakeCount = 0;
-            setInterval(function() {
-                for (var i = 0; i < 5; i++) {  
-                    var snowflake = document.createElement("div");
-                    snowflake.id = "snowflake" + snowFlakeCount;
-                    snowflake.innerHTML = "❉";
-                    snowflake.style.left = Math.random() * 100 + "vw";
-                    snowflake.style.animationDuration = Math.random() * 5 + 5 + "s"; 
-                    snowflake.style.opacity = Math.random();
-                    snowflake.style.fontSize = Math.random() * 20 + 8 + "px";
-                    snowflake.classList.add("snowflake");
-                    document.body.appendChild(snowflake);
-                    setTimeout((function(snowflakeId) {
-                        return function(){
-                            var oldSnowflake = document.getElementById(snowflakeId);
-                            oldSnowflake.parentNode.removeChild(oldSnowflake);
-                        }
-                    })("snowflake" + snowFlakeCount), (Math.random() * 5 + 5) * 1000);
-                    snowFlakeCount += 1;
-                }
-            }, 250);
-        }, false);
-
-        function validateLogin() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            if (username === "admin" && password === "1") {
-                window.location.href = "zhuyemian.html";
-            } else {
-                alert("登录失败，请重试！");
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var snowflakeCount = 0;
+        setInterval(function() {
+            for (var i = 0; i < 5; i++) {  
+                var snowflake = $("<div></div>").addClass("snowflake")
+                                              .attr("id", "snowflake" + snowflakeCount)
+                                              .css("left", Math.random() * 100 + "vw")
+                                              .css("animation-duration", Math.random() * 5 + 5 + "s")
+                                              .css("opacity", Math.random())
+                                              .css("font-size", Math.random() * 20 + 8 + "px")
+                                              .html("❉");
+                $("body").append(snowflake);
+                setTimeout((function(snowflakeId) {
+                    return function(){
+                        $("#" + snowflakeId).remove();
+                    }
+                })("snowflake" + snowflakeCount), (Math.random() * 5 + 5) * 1000);
+                snowflakeCount += 1;
             }
-        }
+        }, 250);
+        $("#username").focus(function() {
+            if ($(this).val() === "请输入账户") {
+                $(this).val("");
+            }
+        });
 
-        function showCredentials() {
-            var username = "admin";
-            var password = "1";
-            alert("账号: " + username + "\n密码: " + password);
+        $("#password").focus(function() {
+            if ($(this).val() === "请输入密码") {
+                $(this).val("");
+            }
+        });
+
+        $("#password").keypress(function(event) {
+            if (event.which === 13) {
+                validateLogin();
+            }
+        });
+    });
+    function validateLogin() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        if (username === "admin" && password === "1") {
+            window.location.href = "zhuyemian.html";
+        } else {
+            alert("登录失败，请重试！");
         }
-    </script>
+    }
+
+    function showCredentials() {
+        var username = "admin";
+        var password = "1";
+        alert("账号: " + username + "\n密码: " + password);
+    }
+</script>
 </head>
 <body>
     <div class="container">
-        <h2>页面验证</h2>
+        <h2>魂系游戏登录验证</h2>
         <label for="username">登录：</label>
-        <input type="text" id="username" name="username" required><br><br>
+        <input type="text" id="username" name="username" placeholder="请输入账户" required><br><br>
         <label for="password">密码：</label>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password" placeholder="请输入密码" required><br><br>
         <button onclick="validateLogin()">登录</button>
         <button onclick="showCredentials()">忘记密码</button>
     </div>
