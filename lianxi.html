@@ -29,6 +29,8 @@
     <button onclick="addMessage()">提交</button>
   </div>
   <div id="messageContainer"></div>
+  <button onclick="goBack()">返回主页面</button>
+
   <script>
     function addMessage() {
       var messageInput = document.getElementById('messageInput');
@@ -44,9 +46,10 @@
         alert('你还没输入！！！');
       }
     }
+    function goBack() {
+      window.location.href = "zhuyemian.html";
+    }
   </script>
-
-
 </body>
 </html>
 
